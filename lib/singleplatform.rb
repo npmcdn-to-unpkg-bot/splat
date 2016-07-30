@@ -27,7 +27,7 @@ module Singleplatform
     private
 
     def initialize_request
-      conn = Faraday.new(:url => HOST) do |faraday|
+      Faraday.new(url: HOST) do |faraday|
         faraday.request  :url_encoded             
         faraday.response :logger 
         faraday.adapter  Faraday.default_adapter
@@ -36,8 +36,6 @@ module Singleplatform
 
     def generate_url(endpoint)
       "#{HOST}#{endpoint}?client=#{CLIENT_ID}&signature=#{generate_signature(endpoint)}"
-      # HOST + endpoint + '?client=' + CLIENT_ID
-      # + '&signature=' + generate_signature(endpoint)
     end
 
     def generate_signature(endpoint)
