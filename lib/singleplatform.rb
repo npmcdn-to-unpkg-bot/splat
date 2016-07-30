@@ -11,22 +11,33 @@ module Singleplatform
     CLIENT_ID = 'ccasmp9mugzpace7mozujntr4'.freeze
     CLIENT_SECRET = 'RDNlCbEuFUbqUim6Lb3ZAZrsVj_kV-cWoIINMcb4aC0'.freeze
 
-    def initialize(args)
-      @client_id = args[:client_id]
-      @client_secret = args[:client_secret]
+    def initialize
+      @client_id = CLIENT_ID
+      @client_secret = CLIENT_SECRET
     end
 
     def locations(id = nil)
       url = generate_url("/locations/#{id}")
+      response = initialize_request.get(url)
+      response.body.gsub!(/\"/, '\'')
     end
 
     def menus(location_id); end
 
     private
 
+    def initialize_request
+      conn = Faraday.new(:url => HOST) do |faraday|
+        faraday.request  :url_encoded             
+        faraday.response :logger 
+        faraday.adapter  Faraday.default_adapter
+      end
+    end
+
     def generate_url(endpoint)
-      HOST + endpoint + '?client=' + CLIENT_ID
-      + '&signature=' + generate_signature(endpoint)
+      "#{HOST}#{endpoint}?client=#{CLIENT_ID}&signature=#{generate_signature(endpoint)}"
+      # HOST + endpoint + '?client=' + CLIENT_ID
+      # + '&signature=' + generate_signature(endpoint)
     end
 
     def generate_signature(endpoint)

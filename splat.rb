@@ -21,5 +21,7 @@ get '/' do
     state:    'New York',
     zip:      '11102'
   )
+  s = Singleplatform::Client.new
+  @sp = s.locations('nobu')
   erb :index, layout: :main
 end
