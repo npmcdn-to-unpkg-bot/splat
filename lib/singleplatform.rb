@@ -7,10 +7,10 @@ require 'hashie'
 
 module Singleplatform
   class Client
-    HOST = 'http://publishing-api.singleplatform.com'.freeze
-    API_KEY = 'khf3fhjsbf1095basvlsgfeut'.freeze
-    CLIENT_ID = 'ccasmp9mugzpace7mozujntr4'.freeze
-    CLIENT_SECRET = 'RDNlCbEuFUbqUim6Lb3ZAZrsVj_kV-cWoIINMcb4aC0'.freeze
+    HOST = ENV['HOST'].freeze
+    API_KEY = ENV['API_KEY'].freeze
+    CLIENT_ID = ENV['CLIENT_ID'].freeze
+    CLIENT_SECRET = ENV['CLIENT_SECRET'].freeze
 
     def initialize
       @client_id = CLIENT_ID
