@@ -18,8 +18,14 @@ module Singleplatform
     end
 
     def locations(id = nil)
+      tries ||= 3
       url = generate_url("/locations/#{id}")
       response = initialize_request.get(url)
+    rescue
+      sleep 5
+      retry if (tries > 0)
+      return false
+    else
       Hashie::Mash.new(JSON.parse(response.body)).data
     end
 
