@@ -14,12 +14,7 @@ require './lib/singleplatform'
 require 'geocoder'
 
 get '/' do
-  @lead = Location.new(
-    name:     'My Place',
-    address:  '30-60 29th Street',
-    city:     'Astoria',
-    state:    'New York',
-    zip:      '11102'
-  )
+  s = SingleplatformService.new.location('nobu')
+  @sp = SingleplatformService.prepare_location_data(s)
   erb :index, layout: :main
 end
