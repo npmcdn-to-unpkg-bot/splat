@@ -11,7 +11,7 @@ class SingleplatformService
     initialize_external_service.locations
   end
 
-  def prepare_location_data(response)
+  def self.prepare_location_data(response)
     {
       spv2:          response.location_id,
       name:          response.name,

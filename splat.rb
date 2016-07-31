@@ -14,7 +14,7 @@ require './lib/singleplatform'
 require 'geocoder'
 
 get '/' do
-  s = SingleplatformService.new
-  @sp = s.location('nobu')
+  s = SingleplatformService.new.location('nobu')
+  @sp = SingleplatformService.prepare_location_data(s)
   erb :index, layout: :main
 end
