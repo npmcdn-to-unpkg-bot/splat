@@ -1,7 +1,6 @@
 # App
 require 'sinatra'
 require 'sinatra/reloader' if development?
-
 require 'dotenv'
 Dotenv.load
 
@@ -15,7 +14,6 @@ require './lib/singleplatform'
 
 # 3rd Party
 require 'geocoder'
-
 
 get '/' do
   s = SingleplatformService.new.location('nobu')
