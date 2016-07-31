@@ -1,6 +1,6 @@
 class Location
-  attr_accessor :name, :address, :city, :state, :zip, :lat, :lng,
-                :owner_verfied
+  attr_accessor :name, :address, :city, :state, :zip, :latitude, :longitude,
+                :owner_verfied, :spv2
 
   def initialize(args = {}, owner_verfied = false)
     @name          = args[:name]

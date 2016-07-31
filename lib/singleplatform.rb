@@ -3,6 +3,7 @@ require 'openssl'
 require 'cgi'
 require 'faraday'
 require 'json'
+require 'hashie'
 
 module Singleplatform
   class Client
@@ -19,17 +20,15 @@ module Singleplatform
     def locations(id = nil)
       url = generate_url("/locations/#{id}")
       response = initialize_request.get(url)
-      response.body.gsub!(/\"/, '\'')
+      Hashie::Mash.new(JSON.parse(response.body)).data
     end
-
-    def menus(location_id); end
 
     private
 
     def initialize_request
       Faraday.new(url: HOST) do |faraday|
-        faraday.request  :url_encoded             
-        faraday.response :logger 
+        faraday.request  :url_encoded
+        faraday.response :logger
         faraday.adapter  Faraday.default_adapter
       end
     end
@@ -39,8 +38,7 @@ module Singleplatform
     end
 
     def generate_signature(endpoint)
-      path = endpoint + '?client=' + CLIENT_ID
-      puts path
+      path = "#{endpoint}?client=#{CLIENT_ID}"
       key = OpenSSL::HMAC.digest('sha1', CLIENT_SECRET, path)
       CGI::escape(Base64.encode64(key).chomp)
     end
