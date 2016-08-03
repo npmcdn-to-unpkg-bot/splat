@@ -17,19 +17,30 @@ module Singleplatform
       @client_secret = CLIENT_SECRET
     end
 
+    # Returns a specifi
     def locations(id = nil)
       tries ||= 3
-      url = generate_url("/locations/#{id}")
+      url = generate_url("/locations/#{id}/")
       response = initialize_request.get(url)
     rescue
       sleep 5
-      retry if (tries > 0)
+      retry if tries > 0
       return false
     else
       Hashie::Mash.new(JSON.parse(response.body)).data
     end
 
-    private
+    def locations_updated_since
+      tries ||= 3
+      url = generate_url('/locations/updated_since/', date: '2016-07-31')
+      response = initialize_request.get(url)
+    rescue
+      sleep 5
+      retry if tries > 0
+      return false
+    else
+      Hashie::Mash.new(JSON.parse(response.body)).data
+    end
 
     def initialize_request
       Faraday.new(url: HOST) do |faraday|
@@ -39,13 +50,19 @@ module Singleplatform
       end
     end
 
-    def generate_url(endpoint)
-      "#{HOST}#{endpoint}?client=#{CLIENT_ID}&signature=#{generate_signature(endpoint)}"
+    def generate_url(path, params = {})
+      query_string = ''
+      params.each do |k, v|
+        query_string += "#{k.to_s}=#{v.to_s}"
+      end
+      query_string += '&' unless query_string.empty?
+      signature_base_string = "#{path}?#{query_string}client=#{CLIENT_ID}"
+      puts signature_base_string
+      "#{HOST}#{signature_base_string}&signature=#{generate_signature(signature_base_string)}"
     end
 
-    def generate_signature(endpoint)
-      path = "#{endpoint}?client=#{CLIENT_ID}"
-      key = OpenSSL::HMAC.digest('sha1', CLIENT_SECRET, path)
+    def generate_signature(base_string)
+      key = OpenSSL::HMAC.digest('sha1', CLIENT_SECRET, base_string)
       CGI::escape(Base64.encode64(key).chomp)
     end
   end

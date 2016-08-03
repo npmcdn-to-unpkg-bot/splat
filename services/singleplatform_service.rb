@@ -3,12 +3,12 @@ class SingleplatformService
     initialize_external_service
   end
 
-  def location(id)
+  def locations(id = nil)
     initialize_external_service.locations(id)
   end
 
-  def all_locations
-    initialize_external_service.locations
+  def locations_updated_since
+    initialize_external_service.locations_updated_since
   end
 
   def self.prepare_location_data(response)
