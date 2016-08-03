@@ -24,7 +24,7 @@ module Singleplatform
       response = initialize_request.get(url)
     rescue
       sleep 5
-      retry if tries > 0
+      retry if tries -= 1 > 0
       return false
     else
       Hashie::Mash.new(JSON.parse(response.body)).data
@@ -36,7 +36,7 @@ module Singleplatform
       response = initialize_request.get(url)
     rescue
       sleep 5
-      retry if tries > 0
+      retry if tries -= 1 > 0
       return false
     else
       Hashie::Mash.new(JSON.parse(response.body)).data
