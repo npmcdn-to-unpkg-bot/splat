@@ -20,7 +20,7 @@ module Singleplatform
     def locations(id = nil)
       tries ||= 3
       url = generate_url("/locations/#{id}/")
-      response = initialize_request.get(url)
+      response = HTTParty.get(url)
     rescue
       sleep 5
       retry if tries -= 1 > 0
@@ -32,21 +32,13 @@ module Singleplatform
     def locations_updated_since(date)
       tries ||= 3
       url = generate_url('/locations/updated_since/', date: date)
-      response = initialize_request.get(url)
+      response = HTTParty.get(url)
     rescue
       sleep 5
       retry if tries -= 1 > 0
       return false
     else
       Hashie::Mash.new(JSON.parse(response.body)).data
-    end
-
-    def initialize_request
-      Faraday.new(url: HOST) do |faraday|
-        # faraday.request  :url_encoded
-        faraday.response :logger
-        faraday.adapter  Faraday.default_adapter
-      end
     end
 
     def generate_url(path, params = {})
