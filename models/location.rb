@@ -2,13 +2,13 @@ class Location
   attr_accessor :name, :address, :city, :state, :zip, :latitude, :longitude,
                 :owner_verfied, :spv2
 
-  def initialize(args = {}, owner_verfied = false)
+  def initialize(args = {})
     @name          = args[:name]
     @address       = args[:address]
     @city          = args[:city]
     @state         = args[:state]
     @zip           = args[:zip]
-    @owner_verfied = owner_verfied
+    @owner_verfied = false
     geocode
   end
 
