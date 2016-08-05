@@ -1,7 +1,7 @@
 require 'base64'
 require 'openssl'
 require 'cgi'
-require 'faraday'
+require 'httparty'
 require 'json'
 require 'hashie'
 
