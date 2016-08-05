@@ -1,7 +1,4 @@
-# App
-require 'sinatra'
-require 'sinatra/reloader' if development?
-require 'dotenv'
+# Load env variables using .env
 Dotenv.load
 
 # Models
@@ -12,10 +9,9 @@ require './services/geocoder_service'
 require './services/singleplatform_service'
 require './lib/singleplatform'
 
-# 3rd Party
-require 'geocoder'
-
-get '/' do
-  @l = Location.new(params)
-  erb :index, layout: :main
+class Splat < Sinatra::Base
+  get '/' do
+    @l = Location.new(params)
+    erb :index, layout: :main
+  end
 end

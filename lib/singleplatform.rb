@@ -1,9 +1,7 @@
 require 'base64'
 require 'openssl'
 require 'cgi'
-require 'httparty'
 require 'json'
-require 'hashie'
 
 module Singleplatform
   class Client
