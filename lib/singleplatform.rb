@@ -55,7 +55,6 @@ module Singleplatform
         query_string += "#{k}=#{v}&"
       end
       signature_base_string = "#{path}?#{query_string}client=#{CLIENT_ID}"
-      puts 'BASE ' + signature_base_string
       "#{HOST}#{signature_base_string}&signature=#{generate_signature(signature_base_string)}"
     end
 
