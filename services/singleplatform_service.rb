@@ -7,8 +7,8 @@ class SingleplatformService
     initialize_external_service.locations(id)
   end
 
-  def locations_updated_since
-    initialize_external_service.locations_updated_since
+  def locations_updated_since(date)
+    initialize_external_service.locations_updated_since(date)
   end
 
   def self.prepare_location_data(response)
