@@ -4,12 +4,13 @@ class Location
 
   def initialize(args = {})
     return nil if args.empty?
-    @name          = args[:name]
-    @address       = args[:address]
-    @city          = args[:city]
-    @state         = args[:state]
-    @zip           = args[:zip]
+    @name    = args[:name]
+    @address = args[:address]
+    @city    = args[:city]
+    @state   = args[:state]
+    @zip     = args[:zip]
     geocode unless unable_to_geocode?(args)
+    logger.info 'Cannot geocode' if unable_to_geocode?(args)
   end
 
   def geocode
