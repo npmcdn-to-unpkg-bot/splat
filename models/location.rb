@@ -1,6 +1,6 @@
 class Location
   attr_accessor :name, :address, :city, :state, :zip, :latitude, :longitude,
-                :owner_verfied, :spv2
+                :spv2
 
   def initialize(args = {})
     return nil if args.empty?
@@ -9,7 +9,6 @@ class Location
     @city          = args[:city]
     @state         = args[:state]
     @zip           = args[:zip]
-    @owner_verfied = false
     geocode unless unable_to_geocode?(args)
   end
 
