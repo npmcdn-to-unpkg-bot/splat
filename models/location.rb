@@ -20,8 +20,8 @@ class Location
                                           #{@state},
                                           #{@zip}
                                         ")
-    @lat = coords[0]
-    @lng = coords[1]
+    @latitude = coords[0]
+    @longitude = coords[1]
   end
 
   private
