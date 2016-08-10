@@ -22,7 +22,7 @@ GEM
     i18n (0.7.0)
     minitest (5.9.0)
     multi_xml (0.5.5)
-    pg (0.18.4)
+    mysql2 (0.4.4)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -47,7 +47,7 @@ DEPENDENCIES
   geocoder
   hashie
   httparty
-  pg
+  mysql2
   rake
   sinatra
   sinatra-activerecord
