@@ -1,6 +1,11 @@
-class Location
+class Location < ActiveRecord::Base
   attr_accessor :name, :address, :city, :state, :zip, :latitude, :longitude,
                 :spv2
+
+  # SPDJ has a "type" column; this makes ActiveRecord believe
+  # we're trying to use single table inheritance, but we're not,
+  # so overwrite it.
+  self.inheritance_column = nil
 
   def initialize(args = {})
     return nil if args.empty?
