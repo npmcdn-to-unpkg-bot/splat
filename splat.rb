@@ -7,7 +7,6 @@ require './models/location'
 
 # Services & Libraries
 require './services/geocoder_service'
-require './services/singleplatform_service'
 require './lib/singleplatform'
 
 class Splat < Sinatra::Base
