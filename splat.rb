@@ -1,5 +1,7 @@
 # Load env variables using .env
+require 'dotenv'
 Dotenv.load
+
 require 'sinatra/activerecord'
 
 # Models
@@ -17,7 +19,7 @@ class Splat < Sinatra::Base
   end
 
   get '/' do
-    @l = Location.new(params)
+    @l = Location.find(1)
     puts @name
     erb :index, layout: :main
   end
