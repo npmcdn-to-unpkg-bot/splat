@@ -1,13 +1,13 @@
-<%= @l.name %><br/>
-<%= @l.address %><br/>
-<%= @l.city %><br/>
-<%= @l.state %><br/>
-<%= @l.zip %><br/>
-<%= @l.latitude %><br/>
-<%= @l.longitude %><br/>
-
 <div id="splat"></div>
 
 <script>
 var mymap = L.map('splat').setView([51.505, -0.09], 13);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token=<%= ENV['MAPBOX_ACCESS_TOKEN'] %>', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'splat',
+    accessToken: 'default'
+}).addTo(mymap);
 </script>
+
