@@ -19,7 +19,6 @@ class Splat < Sinatra::Base
 
   get '/' do
     @l = Location.new(params)
-    logger.info 'BUTT'
     puts @name
     erb :index, layout: :main
   end
