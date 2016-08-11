@@ -21,8 +21,7 @@ class Splat < Sinatra::Base
 
   get '/' do
     @lead = Location.new(params)
-    @locations = Location.near([@lead.latitude, @lead.longitude], 10)
-    puts @name
+    @locations = Location.near([@lead.latitude, @lead.longitude], 5)
     erb :index, layout: :main
   end
 end
