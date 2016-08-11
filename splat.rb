@@ -28,7 +28,7 @@ class Splat < Sinatra::Base
       postcode:  params[:postcode]
     )
     @lead.geocode
-    @locations = Location.near([@lead.latitude, @lead.longitude], 5).limit(20)
+    @locations = Location.near([@lead.latitude, @lead.longitude], 10).limit(50)
     erb :index, layout: :main
   end
 end
