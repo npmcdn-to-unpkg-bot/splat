@@ -1,23 +1,21 @@
 <div id="splat"></div>
 
 <script>
-var mymap = L.map('splat').setView([<%= @lead.latitude %>, <%= @lead.longitude %>], 13);
+  var mymap = L.map('splat').setView([<%= @lead.latitude %>, <%= @lead.longitude %>], 13);
 
-L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token=<%= ENV['MAPBOX_ACCESS_TOKEN'] %>', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'splat',
-    accessToken: 'default'
-}).addTo(mymap);
+  L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token=<%= ENV['MAPBOX_ACCESS_TOKEN'] %>', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'splat',
+      accessToken: 'default'
+  }).addTo(mymap);
 
+  var lead_marker = L.marker([<%= @lead.latitude %>, <%= @lead.longitude %>], {icon: greenIcon}).addTo(mymap);
+  lead_marker.bindPopup("<%= @lead.name %>");
 
-var lead_marker = L.marker([<%= @lead.latitude %>, <%= @lead.longitude %>], {icon: greenIcon}).addTo(mymap);
-lead_marker.bindPopup("<%= @lead.name %>");
-
-<% @locations.each do |location| %>
-var marker_<%= location.id %> = L.marker([<%= location.latitude %>, <%= location.longitude %>], {icon: <%= location.owner_verified? ? 'blueIcon' : 'greyIcon' %>}).addTo(mymap);
-marker_<%= location.id %>.bindPopup("<b><%= location.name %></b><br/><%= location.owner_verified? ? 'Owner Verified' : '' %>");
-<% end %>
-
+  <% @locations.each do |location| %>
+    var marker_<%= location.id %> = L.marker([<%= location.latitude %>, <%= location.longitude %>], {icon: <%= location.owner_verified? ? 'blueIcon' : 'greyIcon' %>}).addTo(mymap);
+    marker_<%= location.id %>.bindPopup("<b><%= location.name %></b><br/><%= location.owner_verified? ? 'Owner Verified' : '' %>");
+  <% end %>
 </script>
 

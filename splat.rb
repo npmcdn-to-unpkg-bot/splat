@@ -33,7 +33,6 @@ class Splat < Sinatra::Base
       erb :index, layout: :main
     else
       erb :error, layout: :main
-    end
-    
+    end    
   end
 end
