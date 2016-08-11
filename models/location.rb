@@ -3,9 +3,6 @@ require 'geocoder/railtie'
 Geocoder::Railtie.insert
 
 class Location < ActiveRecord::Base
-  attr_accessor :name, :address_1, :city, :region_id, :postcode, :latitude,
-                :longitude
-
   # SPDJ has a "type" column; this makes ActiveRecord believe
   # we're trying to use single table inheritance, but we're not,
   # so overwrite it.
@@ -14,24 +11,18 @@ class Location < ActiveRecord::Base
   extend ::Geocoder::Model::ActiveRecord
   geocoded_by :full_address
 
-  def initialize(args = {})
-    return nil if args.empty?
-    @name    = args[:name]
-    @address = args[:address_1]
-    @city    = args[:city]
-    @state   = args[:region_id]
-    @zip     = args[:postcode]
-    geocode unless unable_to_geocode?(args)
-  end
-
   def geocode
     coords = GeocoderService.new.geocode(full_address)
-    @latitude = coords[0]
-    @longitude = coords[1]
+    self.latitude = coords[0]
+    self.longitude = coords[1]
   end
 
   def full_address
     "#{@address_1} #{@city} #{@region_id} #{postcode}"
+  end
+
+  def owner_verified?
+    self.parent_business_id != nil
   end
 
   private

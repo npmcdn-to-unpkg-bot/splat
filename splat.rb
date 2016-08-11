@@ -20,8 +20,15 @@ class Splat < Sinatra::Base
   end
 
   get '/' do
-    @lead = Location.new(params)
-    @locations = Location.near([@lead.latitude, @lead.longitude], 5)
+    @lead = Location.new(
+      name:      params[:name],
+      address_1: params[:address_1],
+      city:      params[:city],
+      region_id: params[:region_id],
+      postcode:  params[:postcode]
+    )
+    @lead.geocode
+    @locations = Location.near([@lead.latitude, @lead.longitude], 5).limit(20)
     erb :index, layout: :main
   end
 end
