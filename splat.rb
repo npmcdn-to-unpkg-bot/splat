@@ -27,8 +27,13 @@ class Splat < Sinatra::Base
       region_id: params[:region_id],
       postcode:  params[:postcode]
     )
-    @lead.geocode
-    @locations = Location.near([@lead.latitude, @lead.longitude], 10).order(parent_business_id: :asc).limit(50)
-    erb :index, layout: :main
+    if @lead.valid?
+      @lead.geocode  
+      @locations = Location.near([@lead.latitude, @lead.longitude], 10).order(parent_business_id: :asc).limit(50)
+      erb :index, layout: :main
+    else
+      erb :error, layout: :main
+    end
+    
   end
 end

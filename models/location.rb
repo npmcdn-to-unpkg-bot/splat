@@ -3,6 +3,7 @@ require 'geocoder/railtie'
 Geocoder::Railtie.insert
 
 class Location < ActiveRecord::Base
+  validates_presence_of :address_1, :city, :region_id, :postcode
   # SPDJ has a "type" column; this makes ActiveRecord believe
   # we're trying to use single table inheritance, but we're not,
   # so overwrite it.
