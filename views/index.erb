@@ -14,7 +14,7 @@
   lead_marker.bindPopup("<%= @lead.name %>");
 
   <% @locations.each do |location| %>
-    var marker_<%= location.id %> = L.marker([<%= location.latitude %>, <%= location.longitude %>], {icon: <%= location.owner_verified? ? 'blueIcon' : 'greyIcon' %>}).addTo(mymap);
+    var marker_<%= location.id %> = L.marker([<%= location.latitude %>, <%= location.longitude %>], {icon: blueIcon}).addTo(mymap);
     marker_<%= location.id %>.bindPopup("<b><%= location.name %></b><br/><%= location.owner_verified? ? 'Owner Verified' : '' %>");
   <% end %>
 </script>
