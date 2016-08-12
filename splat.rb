@@ -5,12 +5,12 @@ Dotenv.load
 require 'sinatra/activerecord'
 
 # Models
-require './models/location'
+require_relative 'models/location'
 
 # Services & Libraries
 require 'geocoder'
-require './services/geocoder_service'
-require './lib/singleplatform'
+require_relative 'services/geocoder_service'
+require_relative 'lib/singleplatform'
 
 class Splat < Sinatra::Base
   register Sinatra::ActiveRecordExtension
