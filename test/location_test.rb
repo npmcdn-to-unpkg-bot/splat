@@ -9,6 +9,20 @@ require_relative '../models/location'
 class LocationTest < Test::Unit::TestCase
   include Rack::Test::Methods
 
+  # Instance methods
+
+  def test_owner_verified_has_business_id
+    @location = Location.new(
+      name:               'SinglePlatform',
+      address_1:          '17 Battery Place',
+      city:               'New York',
+      region_id:          'NY',
+      postcode:           '11102',
+      parent_business_id: 1
+    )
+    assert @location.owner_verified? == true
+  end
+
   # Validations
 
   def test_address_is_required
