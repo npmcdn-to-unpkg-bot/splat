@@ -11,6 +11,17 @@ class LocationTest < Test::Unit::TestCase
 
   # Instance methods
 
+  def test_full_address_concatenates_components
+    @lead = Location.new(
+      name:      'SinglePlatform',
+      address_1: '17 Battery Place',
+      city:      'New York',
+      region_id: 'NY',
+      postcode:  '10004'
+    )
+    assert @lead.full_address == '17 Battery Place New York NY 10004'
+  end
+
   def test_owner_verified_has_business_id
     @location = Location.new(
       name:               'SinglePlatform',

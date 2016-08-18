@@ -19,7 +19,7 @@ class Location < ActiveRecord::Base
   end
 
   def full_address
-    "#{@address_1} #{@city} #{@region_id} #{postcode}"
+    "#{address_1} #{city} #{region_id} #{postcode}"
   end
 
   def owner_verified?
