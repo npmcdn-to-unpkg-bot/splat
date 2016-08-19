@@ -13,7 +13,7 @@ class Location < ActiveRecord::Base
   geocoded_by :full_address
 
   def geocode
-    coords = GeocoderService.geocode(full_address)
+    coords = GeocoderService.new.geocode(full_address)
     self.latitude = coords[0]
     self.longitude = coords[1]
   end
