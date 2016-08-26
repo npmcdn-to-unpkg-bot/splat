@@ -15,10 +15,12 @@ require_relative 'lib/singleplatform'
 class Splat < Sinatra::Base
   register Sinatra::ActiveRecordExtension
 
+  # CONFIG
   configure do
     enable :logging
   end
 
+  # ROUTES
   get '/' do
     @lead = Location.new(
       name:      params[:name],
@@ -28,11 +30,25 @@ class Splat < Sinatra::Base
       postcode:  params[:postcode]
     )
     if @lead.valid?
-      @lead.geocode  
+      # @lead.geocode 
+      @lead.latitude = 42.2722613
+      @lead.longitude = -85.6295118 
       @locations = Location.near([@lead.latitude, @lead.longitude], 10).order(parent_business_id: :asc).limit(50)
+      logger.info "Lead Lat: #{@lead.latitude}"
+      logger.info "Lead Lng: #{@lead.longitude}"
+      logger.info "Locations: #{@locations.size}"
       erb :index, layout: :main
     else
+      logger.info 'Lead invalid'
       erb :error, layout: :main
     end    
   end
+
+  # HELPERS
+  helpers do
+    def h(text)
+      Rack::Utils.escape_html(text)
+    end
+  end
+
 end
