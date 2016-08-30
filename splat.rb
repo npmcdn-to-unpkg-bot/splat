@@ -30,9 +30,7 @@ class Splat < Sinatra::Base
       postcode:  params[:postcode]
     )
     if @lead.valid?
-      # @lead.geocode 
-      @lead.latitude = 42.2722613
-      @lead.longitude = -85.6295118 
+      @lead.geocode 
       @locations = Location.near([@lead.latitude, @lead.longitude], 10).order(parent_business_id: :asc).limit(50)
       logger.info "Lead Lat: #{@lead.latitude}"
       logger.info "Lead Lng: #{@lead.longitude}"
