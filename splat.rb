@@ -1,5 +1,4 @@
-# Load env variables using .env
-Dotenv.load
+
 require 'sinatra/activerecord'
 
 # Models
@@ -9,6 +8,8 @@ require './models/location'
 require './services/geocoder_service'
 require './services/singleplatform_service'
 require './lib/singleplatform'
+
+
 
 class Splat < Sinatra::Base
   register Sinatra::ActiveRecordExtension
