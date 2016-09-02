@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-=======
 # Load env variables using .env
 require 'dotenv'
 Dotenv.load
->>>>>>> 49db96b80d60b3c5eb00233e68291731e6492b82
 
 require 'sinatra/activerecord'
 
@@ -14,8 +11,7 @@ require_relative 'models/location'
 require 'geocoder'
 require_relative 'services/geocoder_service'
 require_relative 'lib/singleplatform'
-
-
+require_relative 'config/geocoder'
 
 class Splat < Sinatra::Base
   register Sinatra::ActiveRecordExtension
@@ -37,9 +33,6 @@ class Splat < Sinatra::Base
     if @lead.valid?
       @lead.geocode 
       @locations = Location.near([@lead.latitude, @lead.longitude], 10).order(parent_business_id: :asc).limit(50)
-      logger.info "Lead Lat: #{@lead.latitude}"
-      logger.info "Lead Lng: #{@lead.longitude}"
-      logger.info "Locations: #{@locations.size}"
       erb :index, layout: :main
     else
       logger.info 'Lead invalid'
