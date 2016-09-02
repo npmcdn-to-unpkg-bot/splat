@@ -1,27 +1,57 @@
+<<<<<<< HEAD
+=======
+# Load env variables using .env
+require 'dotenv'
+Dotenv.load
+>>>>>>> 49db96b80d60b3c5eb00233e68291731e6492b82
 
 require 'sinatra/activerecord'
 
 # Models
-require './models/location'
+require_relative 'models/location'
 
 # Services & Libraries
-require './services/geocoder_service'
-require './services/singleplatform_service'
-require './lib/singleplatform'
+require 'geocoder'
+require_relative 'services/geocoder_service'
+require_relative 'lib/singleplatform'
 
 
 
 class Splat < Sinatra::Base
   register Sinatra::ActiveRecordExtension
 
+  # CONFIG
   configure do
     enable :logging
   end
 
+  # ROUTES
   get '/' do
-    @l = Location.new(params)
-    logger.info 'BUTT'
-    puts @name
-    erb :index, layout: :main
+    @lead = Location.new(
+      name:      params[:name],
+      address_1: params[:address_1],
+      city:      params[:city],
+      region_id: params[:region_id],
+      postcode:  params[:postcode]
+    )
+    if @lead.valid?
+      @lead.geocode 
+      @locations = Location.near([@lead.latitude, @lead.longitude], 10).order(parent_business_id: :asc).limit(50)
+      logger.info "Lead Lat: #{@lead.latitude}"
+      logger.info "Lead Lng: #{@lead.longitude}"
+      logger.info "Locations: #{@locations.size}"
+      erb :index, layout: :main
+    else
+      logger.info 'Lead invalid'
+      erb :error, layout: :main
+    end    
   end
+
+  # HELPERS
+  helpers do
+    def h(text)
+      Rack::Utils.escape_html(text)
+    end
+  end
+
 end
